@@ -78,15 +78,23 @@
         .on("mouseover", function(d) {
           d3.select(this).style("fill", "red");
 
-          // Should be using Ids instead of values
+        
           g.selectAll(".tooltip").data([d]).enter().append("text")
           .attr("class", "tooltip")
-          .attr("x", function(d) { return x(d.name); })
-          .attr("y", function(d) { return y(d.value) - 10; })
+          .attr("x", function(d) { return x(d.name) - 15; })
+          .attr("y", function(d) { return y(d.value) - 15; })
           .text(function(d, i) { return displayValue(d.value); })
           .style("font-size", 20)
           .style("font-family", "monospace");
+					
         
+        	g.selectAll("line").data([d]).enter().append("line")
+            .attr("class", "line")
+            .attr("x1", function(d) { return x(d.name); })
+            .attr("y1", function(d) { return y(d.value); })
+            .attr("x2", function(d) { return x(d.name); })
+            .attr("y2", 400)
+            .style("stroke-dasharray", ("3, 3")) ;
       
         })
         .on("mouseout", function(d) {
@@ -94,8 +102,11 @@
 
           // Should be using Ids instead of values
           g.selectAll(".tooltip").remove();
-
-        })      	;
+	
+          g.selectAll("line").remove();
+        	
+        
+        });
 
       g.selectAll("path").data([data]).enter().append("path")
         .attr("class", "line")
@@ -106,4 +117,3 @@
 
   </script>
 </body>
-
